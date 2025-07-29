@@ -1,113 +1,156 @@
 [
   {
-    "name": "INSPIRE Scholarship",
-    "amount": "₹80,000",
-    "deadline": "2025-08-15",
-    "eligibility": "Top 1% in Class 12 Board Exams",
-    "link": "https://online-inspire.gov.in/"
+    "name": "National Means Cum Merit Scholarship",
+    "academicLevel": "Class 10",
+    "type": "Merit-based",
+    "gender": "All",
+    "income": "Below ₹1L",
+    "state": "Delhi",
+    "deadline": "2025-10-15",
+    "url": "https://scholarships.gov.in"
+  },
+  {
+    "name": "INSPIRE Scholarship for Higher Education",
+    "academicLevel": "Undergraduate",
+    "type": "Merit-based",
+    "gender": "All",
+    "income": "₹1L - ₹5L",
+    "state": "Maharashtra",
+    "deadline": "2025-09-30",
+    "url": "https://online-inspire.gov.in"
+  },
+  {
+    "name": "CBSE Single Girl Child Scholarship",
+    "academicLevel": "Class 12",
+    "type": "Need-based",
+    "gender": "Female Only",
+    "income": "Below ₹1L",
+    "state": "Others",
+    "deadline": "2025-08-31",
+    "url": "https://cbse.gov.in"
   },
   {
     "name": "AICTE Pragati Scholarship for Girls",
-    "amount": "₹50,000",
-    "deadline": "2025-09-30",
-    "eligibility": "Girl students in 1st year of technical diploma/degree",
-    "link": "https://scholarships.gov.in/"
+    "academicLevel": "Undergraduate",
+    "type": "Government",
+    "gender": "Female Only",
+    "income": "Below ₹8L",
+    "state": "Karnataka",
+    "deadline": "2025-10-10",
+    "url": "https://aicte-india.org"
   },
   {
     "name": "AICTE Saksham Scholarship",
-    "amount": "₹50,000",
+    "academicLevel": "Undergraduate",
+    "type": "Government",
+    "gender": "All",
+    "income": "₹1L - ₹5L",
+    "state": "Delhi",
     "deadline": "2025-10-10",
-    "eligibility": "Differently-abled students in technical degree/diploma",
-    "link": "https://scholarships.gov.in/"
+    "url": "https://aicte-india.org"
   },
   {
-    "name": "HDFC Badhte Kadam Scholarship",
-    "amount": "₹1,00,000",
-    "deadline": "2025-08-30",
-    "eligibility": "Students from Class 9 to UG, low income",
-    "link": "https://www.buddy4study.com"
-  },
-  {
-    "name": "Dr. APJ Abdul Kalam Scholarship",
-    "amount": "₹20,000",
+    "name": "Jindal Scholarship Scheme",
+    "academicLevel": "Postgraduate",
+    "type": "Private",
+    "gender": "All",
+    "income": "₹1L - ₹5L",
+    "state": "Maharashtra",
     "deadline": "2025-11-15",
-    "eligibility": "UG Science students with 75%+ marks",
-    "link": "https://www.scholarships.gov.in"
+    "url": "https://sitaramjindalfoundation.org"
+  },
+  {
+    "name": "HDFC Educational Crisis Scholarship",
+    "academicLevel": "Class 12",
+    "type": "Private",
+    "gender": "All",
+    "income": "Below ₹10L",
+    "state": "Others",
+    "deadline": "2025-09-01",
+    "url": "https://www.hdfcbank.com"
+  },
+  {
+    "name": "L’Oréal India For Young Women in Science",
+    "academicLevel": "Undergraduate",
+    "type": "Private",
+    "gender": "Female Only",
+    "income": "₹1L - ₹5L",
+    "state": "Karnataka",
+    "deadline": "2025-08-30",
+    "url": "https://www.foryoungwomeninscience.com"
+  },
+  {
+    "name": "ONGC Scholarship for SC/ST Students",
+    "academicLevel": "Undergraduate",
+    "type": "Government",
+    "gender": "All",
+    "income": "Below ₹4.5L",
+    "state": "Delhi",
+    "deadline": "2025-10-25",
+    "url": "https://www.ongcindia.com"
+  },
+  {
+    "name": "Santoor Women’s Scholarship",
+    "academicLevel": "Undergraduate",
+    "type": "Private",
+    "gender": "Female Only",
+    "income": "Below ₹2L",
+    "state": "Karnataka",
+    "deadline": "2025-09-15",
+    "url": "https://www.santoorscholarships.com"
   },
 
 
   {
-    "name": "Sitaram Jindal Foundation Scholarship",
-    "amount": "₹2,000 - ₹2,500/month",
-    "deadline": "2025-10-31",
-    "eligibility": "Students from Class 11 to PG",
-    "link": "http://www.sitaramjindalfoundation.org/"
+    "name": "Fair and Lovely Foundation Scholarship",
+    "academicLevel": "Undergraduate",
+    "type": "Private",
+    "gender": "Female Only",
+    "income": "Below ₹6L",
+    "state": "Others",
+    "deadline": "2025-09-10",
+    "url": "https://www.glowandlovelycareers.in"
   },
   {
-    "name": "Nikon Scholarship Program",
-    "amount": "₹1,00,000",
-    "deadline": "2025-09-25",
-    "eligibility": "Photography course students",
-    "link": "https://www.buddy4study.com"
+    "name": "Maulana Azad National Scholarship for Minority Girls",
+    "academicLevel": "Class 12",
+    "type": "Government",
+    "gender": "Female Only",
+    "income": "Below ₹1L",
+    "state": "Others",
+    "deadline": "2025-10-01",
+    "url": "https://www.minorityaffairs.gov.in"
   },
   {
-    "name": "ONGC Scholarship for SC/ST",
-    "amount": "₹48,000/year",
-    "deadline": "2025-12-01",
-    "eligibility": "SC/ST UG/PG students in engineering/medical",
-    "link": "https://www.ongcindia.com"
-  },
-  {
-    "name": "Tata Capital Pankh Scholarship",
-    "amount": "₹12,000 to ₹50,000",
-    "deadline": "2025-10-15",
-    "eligibility": "Low-income UG/PG students",
-    "link": "https://www.buddy4study.com"
+    "name": "Ishan Uday Scholarship for North Eastern Region",
+    "academicLevel": "Undergraduate",
+    "type": "Government",
+    "gender": "All",
+    "income": "Below ₹4.5L",
+    "state": "Others",
+    "deadline": "2025-10-30",
+    "url": "https://www.ugc.ac.in/ner/"
   },
   {
     "name": "Kind Circle Scholarship",
-    "amount": "₹10,000",
-    "deadline": "2025-09-10",
-    "eligibility": "Financially disadvantaged meritorious students",
-    "link": "https://www.buddy4study.com"
-  },
-
-
-  {
-    "name": "MHRD Central Sector Scholarship",
-    "amount": "₹10,000/year (UG)",
-    "deadline": "2025-09-15",
-    "eligibility": "80%+ marks in Class 12, family income < ₹8L",
-    "link": "https://scholarships.gov.in/"
+    "academicLevel": "Class 12",
+    "type": "Private",
+    "gender": "All",
+    "income": "Below ₹3L",
+    "state": "Delhi",
+    "deadline": "2025-08-20",
+    "url": "https://kindcircle.org"
   },
   {
-    "name": "Reliance Foundation Undergraduate Scholarships",
-    "amount": "Up to ₹2,00,000/year",
-    "deadline": "2025-08-28",
-    "eligibility": "Top 15,000 JEE/NEET/12th performers",
-    "link": "https://www.reliancefoundation.org/"
-  },
-  {
-    "name": "LIC Golden Jubilee Scholarship",
-    "amount": "₹20,000/year",
-    "deadline": "2025-11-30",
-    "eligibility": "Students from economically weaker families",
-    "link": "https://licindia.in"
-  },
-  {
-    "name": "Aditya Birla Scholarship",
-    "amount": "₹65,000 - ₹1,80,000/year",
-    "deadline": "2025-10-10",
-    "eligibility": "IITs, BITS, IIMs, XLRI students",
-    "link": "https://www.adityabirlascholars.net/"
-  },
-  {
-    "name": "Kotak Shiksha Nidhi",
-    "amount": "Full tuition + expenses",
-    "deadline": "2025-08-31",
-    "eligibility": "Students affected by COVID-19",
-    "link": "https://www.kotak.com"
+    "name": "Dr. APJ Abdul Kalam Ignite Awards",
+    "academicLevel": "Class 10",
+    "type": "Merit-based",
+    "gender": "All",
+    "income": "All",
+    "state": "Maharashtra",
+    "deadline": "2025-09-25",
+    "url": "https://nif.org.in"
   }
 
-
+  
 ]
