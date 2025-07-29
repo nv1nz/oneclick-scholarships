@@ -1,63 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>OneClick Scholarships</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script defer src="script.js"></script>
 </head>
-<body class="bg-gray-50 font-sans min-h-screen flex flex-col">
 
+<body class="bg-gradient-to-br from-indigo-50 to-white font-sans">
   <!-- Header -->
-  <header class="bg-blue-600 text-white p-4 flex justify-between items-center">
-    <h1 class="text-2xl font-bold">OneClick Scholarships</h1>
-    <!-- AI Assistant Button -->
-    <button id="ai-toggle" class="bg-white text-blue-600 px-3 py-1 rounded">Allen AI</button>
+  <header class="bg-white shadow-md p-4 flex items-center justify-between sticky top-0 z-50">
+    <h1 class="text-2xl font-bold text-indigo-600 tracking-wide">OneClick Scholarships</h1>
+    <button id="allenToggle" class="bg-indigo-500 text-white px-4 py-2 rounded-full hover:bg-indigo-600 transition duration-300 shadow">Ask ALLEN AI</button>
   </header>
 
-  <!-- Search & Filters -->
-  <section class="p-4 grid md:grid-cols-4 gap-4">
-    <input type="text" id="search" placeholder="Search scholarships..." class="col-span-2 p-2 border rounded" />
+  <!-- Search + Filters -->
+  <section class="max-w-7xl mx-auto px-4 py-6">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <!-- Search Bar -->
+      <div class="md:col-span-3">
+        <input type="text" placeholder="Search scholarships by name, type, or eligibility..." class="w-full p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-200 shadow-sm" />
+      </div>
 
-    <!-- Filters -->
-    <select id="category" class="p-2 border rounded">
-      <option value="">All Categories</option>
-      <option value="Merit-based">Merit-based</option>
-      <option value="Need-based">Need-based</option>
-      <option value="Women">Women</option>
-      <!-- Add more categories as needed -->
-    </select>
+      <!-- Filter Button (Mobile) -->
+      <div class="md:hidden">
+        <button class="w-full p-3 bg-indigo-500 text-white rounded-xl hover:bg-indigo-600 transition duration-300 shadow">Filters</button>
+      </div>
+    </div>
 
-    <select id="education-level" class="p-2 border rounded">
-      <option value="">All Education Levels</option>
-      <option value="Undergraduate">Undergraduate</option>
-      <option value="Postgraduate">Postgraduate</option>
-      <option value="School">School</option>
-    </select>
+    <!-- Filters (Desktop Sidebar) -->
+    <div class="flex flex-col md:flex-row gap-6 mt-6">
+      <div class="md:w-1/4 space-y-4">
+        <select class="w-full p-3 border border-gray-300 rounded-xl transition duration-200 shadow-sm">
+          <option>Academic Level</option>
+          <option>Class 10</option>
+          <option>Class 12</option>
+          <option>Undergraduate</option>
+          <option>Postgraduate</option>
+        </select>
 
-    <input type="date" id="deadline" class="p-2 border rounded" />
+        <select class="w-full p-3 border border-gray-300 rounded-xl transition duration-200 shadow-sm">
+          <option>Scholarship Type</option>
+          <option>Merit-based</option>
+          <option>Need-based</option>
+          <option>Private</option>
+          <option>Government</option>
+        </select>
+
+        <select class="w-full p-3 border border-gray-300 rounded-xl transition duration-200 shadow-sm">
+          <option>Gender</option>
+          <option>All</option>
+          <option>Female Only</option>
+        </select>
+
+        <select class="w-full p-3 border border-gray-300 rounded-xl transition duration-200 shadow-sm">
+          <option>Income Bracket</option>
+          <option>Below ₹1L</option>
+          <option>₹1L - ₹5L</option>
+          <option>₹5L - ₹10L</option>
+          <option>Above ₹10L</option>
+        </select>
+
+        <select class="w-full p-3 border border-gray-300 rounded-xl transition duration-200 shadow-sm">
+          <option>State</option>
+          <option>Maharashtra</option>
+          <option>Karnataka</option>
+          <option>Delhi</option>
+          <option>Others</option>
+        </select>
+      </div>
+
+      <!-- Scholarship Grid -->
+      <div class="md:w-3/4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Example card -->
+        <div class="bg-white shadow-lg rounded-2xl p-6 hover:shadow-xl transition transform hover:-translate-y-1 border border-gray-100">
+          <h3 class="text-lg font-semibold text-indigo-700 mb-2">Scholarship Name</h3>
+          <p class="text-sm text-gray-600 mb-1">💰 Amount: ₹50,000</p>
+          <p class="text-sm text-gray-600 mb-1">📅 Deadline: Aug 31, 2025</p>
+          <p class="text-sm text-gray-600 mb-3">🎓 Eligible for UG students under ₹5L income</p>
+          <button class="bg-gradient-to-r from-indigo-500 to-indigo-600 text-white px-4 py-2 rounded-xl hover:from-indigo-600 hover:to-indigo-700 transition w-full shadow">Apply Now</button>
+        </div>
+
+        <p class="text-gray-500 col-span-full text-center py-20 hidden">Loading scholarships...</p>
+      </div>
+    </div>
   </section>
 
-  <!-- Scholarship List -->
-  <main class="p-4 flex-1 overflow-y-auto" id="scholarship-list">
-    <!-- Scholarships will be injected here -->
-  </main>
-
-  <!-- AI Assistant -->
-  <div id="ai-chat" class="fixed bottom-0 right-0 m-4 w-80 bg-white border border-gray-300 rounded shadow-lg hidden flex-col">
-    <div class="bg-blue-600 text-white p-2 flex justify-between items-center">
-      <span class="font-semibold">Allen AI</span>
-      <button id="close-ai" class="text-sm">×</button>
-    </div>
-    <div class="p-2 flex-1 overflow-y-auto" id="ai-messages" style="height:300px;">
-      <!-- AI messages will appear here -->
-    </div>
-    <div class="p-2 flex">
-      <input type="text" id="ai-input" placeholder="Ask me..." class="flex-1 border p-1 rounded" />
-      <button id="send-ai" class="ml-2 bg-blue-600 text-white px-3 py-1 rounded">Send</button>
+  <!-- Allen AI Chat Box -->
+  <div id="allenChat" class="hidden fixed bottom-20 right-6 w-80 bg-white rounded-xl shadow-2xl border border-gray-200 transition-all duration-300">
+    <div class="p-4 border-b font-semibold text-indigo-600">ALLEN AI Assistant</div>
+    <div class="p-4 text-sm text-gray-700">Hi! I’m ALLEN AI. Ask me about scholarships, deadlines, eligibility, and more!</div>
+    <div class="p-2">
+      <input type="text" placeholder="Type your question..." class="w-full p-2 border border-gray-300 rounded-md text-sm focus:ring-2 focus:ring-indigo-500" />
     </div>
   </div>
-
-  <script src="script.js"></script>
 </body>
+
 </html>
