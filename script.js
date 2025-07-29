@@ -1,83 +1,79 @@
 let scholarships = [];
 
-// Load scholarships from JSON
-async function fetchScholarships() {
-  try {
-    const res = await fetch('scholarships.json');
-    scholarships = await res.json();
-    renderScholarships(scholarships);
-  } catch (err) {
-    console.error("Error loading scholarships:", err);
-  }
-}
-
-// Render scholarship cards
-function renderScholarships(data) {
-  const container = document.querySelector('.md\\:w-3\\/4.grid');
-  container.innerHTML = '';
-
-  if (data.length === 0) {
-    container.innerHTML = '<p class="text-gray-500 col-span-full text-center py-20">No scholarships found.</p>';
-    return;
-  }
-
-  data.forEach(sch => {
-    container.innerHTML += `
-      <div class="bg-white rounded-2xl shadow-lg p-6 transform hover:scale-105 transition duration-300 border-t-4 border-indigo-500">
-        <h3 class="text-xl font-bold text-indigo-700 mb-2">📚 ${sch.name}</h3>
-        <p class="text-sm text-gray-600 mb-1">💰 Amount: ${sch.amount}</p>
-        <p class="text-sm text-gray-600 mb-1">📅 Deadline: ${sch.deadline}</p>
-        <p class="text-sm text-gray-600 mb-4">✅ ${sch.eligibility}</p>
-        <a href="${sch.link}" target="_blank">
-          <button class="w-full bg-indigo-600 text-white py-2 rounded-xl hover:bg-indigo-700 transition">Apply Now</button>
-        </a>
-      </div>
-    `;
-  });
-}
-
-// Apply filters
-function applyFilters() {
-  const query = document.querySelector('input[type="text"]').value.toLowerCase();
-  const selects = document.querySelectorAll("select");
-  const filters = [...selects].map(s => s.value);
-
-  const filtered = scholarships.filter(s => {
-    return (
-      s.name.toLowerCase().includes(query) &&
-      (filters[0] === "🎓 Academic Level" || s.level === filters[0]) &&
-      (filters[1] === "🏷️ Scholarship Type" || s.type === filters[1]) &&
-      (filters[2] === "🚻 Gender" || s.gender === filters[2]) &&
-      (filters[3] === "💸 Income Bracket" || s.income === filters[3]) &&
-      (filters[4] === "📍 State" || s.state === filters[4])
-    );
-  });
-
-  renderScholarships(filtered);
-}
-
-// Event listeners
 document.addEventListener("DOMContentLoaded", () => {
-  fetchScholarships();
+  const grid = document.querySelector(".md\\:w-3\\/4 .grid");
+  const searchInput = document.querySelector("input[type='text']");
+  const filters = document.querySelectorAll("select");
+  const allenInput = document.querySelector("#allenChat input");
+  const allenBtn = document.querySelector("#allenChat button");
 
-  document.querySelector('input[type="text"]').addEventListener("input", applyFilters);
-  document.querySelectorAll("select").forEach(sel => sel.addEventListener("change", applyFilters));
+  // Load scholarships
+  fetch("scholarships.json")
+    .then(res => res.json())
+    .then(data => {
+      scholarships = data;
+      displayScholarships(scholarships);
+    });
 
-  // AI Chat dummy response
-  const aiInput = document.querySelector("#allenChat input");
-  const aiBtn = document.querySelector("#allenChat button");
-  const aiBox = document.querySelector("#allenChat .p-4.text-sm");
+  function displayScholarships(data) {
+    grid.innerHTML = "";
+    if (data.length === 0) {
+      grid.innerHTML = `<p class="text-gray-500 col-span-full text-center py-20">No scholarships found.</p>`;
+      return;
+    }
 
-  aiBtn.addEventListener("click", () => {
-    const question = aiInput.value.trim();
-    if (question === "") return;
+    data.forEach(s => {
+      const div = document.createElement("div");
+      div.className = "bg-white rounded-2xl shadow-lg p-6 transform hover:scale-105 transition duration-300 border-t-4 border-indigo-500 animate-fade-in";
+      div.innerHTML = `
+        <h3 class="text-xl font-bold text-indigo-700 mb-2">📚 ${s.name}</h3>
+        <p class="text-sm text-gray-600 mb-1">💰 Amount: ${s.amount}</p>
+        <p class="text-sm text-gray-600 mb-1">📅 Deadline: ${s.deadline}</p>
+        <p class="text-sm text-gray-600 mb-4">✅ ${s.eligibility}</p>
+        <a href="${s.link}" target="_blank"><button class="w-full bg-indigo-600 text-white py-2 rounded-xl hover:bg-indigo-700 transition">Apply Now</button></a>
+      `;
+      grid.appendChild(div);
+    });
+  }
 
-    let reply = "Sorry, I can't answer that yet!";
-    if (question.includes("deadline")) reply = "Deadlines vary. Filter scholarships above to see current ones.";
-    else if (question.includes("eligibility")) reply = "Eligibility depends on your class, income, and state.";
-    else if (question.includes("top")) reply = "Check out merit-based scholarships for top opportunities.";
+  function filterScholarships() {
+    const query = searchInput.value.toLowerCase();
+    let filtered = scholarships.filter(s => {
+      return (
+        s.name.toLowerCase().includes(query) ||
+        s.eligibility.toLowerCase().includes(query) ||
+        s.type?.toLowerCase().includes(query)
+      );
+    });
 
-    aiBox.innerHTML += `<div class="mt-2 text-gray-600"><b>You:</b> ${question}<br><b>ALLEN AI:</b> ${reply}</div>`;
-    aiInput.value = "";
+    filters.forEach(select => {
+      const val = select.value;
+      if (!val || val.includes("🎓") || val.includes("🏷️") || val.includes("📍") || val.includes("🚻") || val.includes("💸")) return;
+
+      filtered = filtered.filter(s =>
+        Object.values(s).some(field => field.toLowerCase().includes(val.toLowerCase()))
+      );
+    });
+
+    displayScholarships(filtered);
+  }
+
+  searchInput.addEventListener("input", filterScholarships);
+  filters.forEach(select => select.addEventListener("change", filterScholarships));
+
+  // Allen AI basic reply
+  allenBtn.addEventListener("click", () => {
+    const q = allenInput.value.toLowerCase();
+    let response = "Sorry, I didn't understand that.";
+
+    if (q.includes("deadline")) {
+      response = "Most deadlines are between Aug and Dec 2025.";
+    } else if (q.includes("10") || q.includes("class 10")) {
+      response = "Here are some scholarships for Class 10 students. Please use the filter!";
+    } else if (q.includes("female")) {
+      response = "Use the gender filter to find female-specific scholarships!";
+    }
+
+    alert("ALLEN AI says:\n\n" + response);
   });
 });
