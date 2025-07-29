@@ -1,24 +1,24 @@
-// script.js
-
 document.addEventListener("DOMContentLoaded", () => {
-  const toggleBtn = document.getElementById("allenToggle");
-  const chatBox = document.getElementById("allenChat");
+  const allenToggle = document.getElementById("allenToggle");
+  const allenChat = document.getElementById("allenChat");
 
-  toggleBtn.addEventListener("click", () => {
-    chatBox.classList.toggle("hidden");
-    chatBox.classList.toggle("animate-fade-in");
+  // Toggle ALLEN AI chat box
+  allenToggle.addEventListener("click", () => {
+    allenChat.classList.toggle("hidden");
+    allenChat.classList.add("animate-fade-in");
   });
-});
 
-// Optional animation class
-const style = document.createElement("style");
-style.innerHTML = `
-@keyframes fade-in {
-  0% { opacity: 0; transform: translateY(10px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
-.animate-fade-in {
-  animation: fade-in 0.3s ease-out;
-}
-`;
-document.head.appendChild(style);
+  // Simulate Allen AI response (optional for now)
+  const inputBox = allenChat.querySelector("input");
+  const sendBtn = allenChat.querySelector("button");
+
+  sendBtn.addEventListener("click", () => {
+    const query = inputBox.value.trim();
+    if (query.length > 0) {
+      alert("ALLEN AI is thinking... (feature coming soon!)");
+      inputBox.value = "";
+    }
+  });
+
+  // You can expand this with real AI backend or typed response later
+});
