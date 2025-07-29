@@ -1,78 +1,57 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const grid = document.getElementById("scholarshipGrid");
-  const searchInput = document.getElementById("searchInput");
+function handleAIInput(query) {
+  const scholarships = window.allScholarships || [];
+  const filters = {
+    academicLevel: null,
+    type: null,
+    gender: null,
+    income: null,
+    state: null,
+    deadline: null,
+  };
 
-  // Filters
-  const academic = document.getElementById("filterAcademic");
-  const type = document.getElementById("filterType");
-  const gender = document.getElementById("filterGender");
-  const income = document.getElementById("filterIncome");
-  const state = document.getElementById("filterState");
+  const q = query.toLowerCase();
 
-  let scholarships = [];
+  // Match academicLevel
+  if (q.includes("class 10")) filters.academicLevel = "Class 10";
+  else if (q.includes("class 12")) filters.academicLevel = "Class 12";
+  else if (q.includes("undergraduate") || q.includes("bachelor")) filters.academicLevel = "Undergraduate";
+  else if (q.includes("postgraduate") || q.includes("pg") || q.includes("master")) filters.academicLevel = "Postgraduate";
 
-  fetch("scholarships.json")
-    .then(res => res.json())
-    .then(data => {
-      scholarships = data;
-      renderScholarships(scholarships);
-    });
+  // Match type
+  if (q.includes("government")) filters.type = "Government";
+  else if (q.includes("private")) filters.type = "Private";
+  else if (q.includes("merit")) filters.type = "Merit-based";
+  else if (q.includes("need") || q.includes("financial")) filters.type = "Need-based";
 
-  function renderScholarships(data) {
-    grid.innerHTML = "";
+  // Match gender
+  if (q.includes("female") || q.includes("girl") || q.includes("women")) filters.gender = "Females Only";
+  else if (q.includes("male") || q.includes("boy") || q.includes("man")) filters.gender = "Males Only";
+  else if (q.includes("all") || q.includes("any")) filters.gender = "All";
 
-    if (data.length === 0) {
-      grid.innerHTML = `<p class="text-gray-500 col-span-full text-center py-10">No scholarships found.</p>`;
-      return;
+  // Match income
+  if (q.includes("below 1") || q.includes("under 1")) filters.income = "Below ₹1L";
+  else if (q.includes("below 2") || q.includes("under 2")) filters.income = "Below ₹2L";
+  else if (q.includes("below 5") || q.includes("under 5")) filters.income = "₹1L - ₹5L";
+  else if (q.includes("below 8") || q.includes("under 8")) filters.income = "Below ₹8L";
+  else if (q.includes("above 8") || q.includes("more than 8")) filters.income = "Above ₹8L";
+
+  // Match state
+  const allStates = ["Maharashtra", "Delhi", "Karnataka", "Tamil Nadu", "Uttar Pradesh", "Gujarat", "Bihar", "West Bengal", "Rajasthan", "Punjab"];
+  for (const state of allStates) {
+    if (q.includes(state.toLowerCase())) {
+      filters.state = state;
+      break;
     }
-
-    data.forEach(s => {
-      const card = document.createElement("div");
-      card.className = "bg-white p-5 rounded-2xl shadow hover:shadow-lg transition duration-300 animate-fade-in";
-      card.innerHTML = `
-        <h3 class="text-lg font-semibold text-indigo-700 mb-2">${s.name}</h3>
-        <p class="text-sm text-gray-600 mb-1"><b>Type:</b> ${s.type}</p>
-        <p class="text-sm text-gray-600 mb-1"><b>Academic:</b> ${s.academic}</p>
-        <p class="text-sm text-gray-600 mb-1"><b>Gender:</b> ${s.gender}</p>
-        <p class="text-sm text-gray-600 mb-1"><b>Income:</b> ${s.income}</p>
-        <p class="text-sm text-gray-600 mb-3"><b>State:</b> ${s.state}</p>
-        <a href="${s.link}" target="_blank" class="inline-block mt-2 text-indigo-600 font-medium hover:underline">Apply Now →</a>
-      `;
-      grid.appendChild(card);
-    });
   }
 
-  // Filter logic
-  function applyFilters() {
-    const keyword = searchInput.value.toLowerCase();
+  // Filter the scholarships based on extracted filters
+  const filtered = scholarships.filter(sch => {
+    return (!filters.academicLevel || sch.academicLevel === filters.academicLevel) &&
+           (!filters.type || sch.type === filters.type) &&
+           (!filters.gender || sch.gender === filters.gender) &&
+           (!filters.income || sch.income === filters.income) &&
+           (!filters.state || sch.state === filters.state);
+  });
 
-    const filtered = scholarships.filter(s => {
-      const matchSearch =
-        s.name.toLowerCase().includes(keyword) ||
-        s.type.toLowerCase().includes(keyword) ||
-        s.eligibility?.toLowerCase().includes(keyword);
-
-      const matchAcademic = !academic.value || s.academic === academic.value;
-      const matchType = !type.value || s.type === type.value;
-      const matchGender = !gender.value || s.gender === gender.value;
-      const matchIncome = !income.value || s.income === income.value;
-      const matchState = !state.value || s.state === state.value;
-
-      return (
-        matchSearch &&
-        matchAcademic &&
-        matchType &&
-        matchGender &&
-        matchIncome &&
-        matchState
-      );
-    });
-
-    renderScholarships(filtered);
-  }
-
-  // Add event listeners
-  [searchInput, academic, type, gender, income, state].forEach(el =>
-    el.addEventListener("input", applyFilters)
-  );
-});
+  displayScholarships(filtered);
+}
