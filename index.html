@@ -30,7 +30,7 @@
     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
       <!-- Search Bar -->
       <div class="md:col-span-3">
-        <input type="text" placeholder="🔍 Search scholarships by name, type, or eligibility..." class="w-full p-4 border border-gray-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-200 shadow-lg" />
+        <input id="searchInput" type="text" placeholder="🔍 Search scholarships by name, type, or eligibility..." class="w-full p-4 border border-gray-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-200 shadow-lg" />
       </div>
       <div class="md:hidden">
         <button class="w-full p-3 bg-indigo-500 text-white rounded-xl hover:bg-indigo-600 transition duration-300 shadow">Filters</button>
@@ -40,34 +40,34 @@
     <!-- Filters (Desktop Sidebar) -->
     <div class="flex flex-col md:flex-row gap-6 mt-8">
       <div class="md:w-1/4 space-y-4">
-        <select class="w-full p-3 border border-gray-300 rounded-xl shadow focus:outline-none">
-          <option>🎓 Academic Level</option>
+        <select id="filterAcademic" class="w-full p-3 border border-gray-300 rounded-xl shadow focus:outline-none">
+          <option value="">🎓 Academic Level</option>
           <option>Class 10</option>
           <option>Class 12</option>
           <option>Undergraduate</option>
           <option>Postgraduate</option>
         </select>
-        <select class="w-full p-3 border border-gray-300 rounded-xl shadow focus:outline-none">
-          <option>🏷️ Scholarship Type</option>
+        <select id="filterType" class="w-full p-3 border border-gray-300 rounded-xl shadow focus:outline-none">
+          <option value="">🏷️ Scholarship Type</option>
           <option>Merit-based</option>
           <option>Need-based</option>
           <option>Private</option>
           <option>Government</option>
         </select>
-        <select class="w-full p-3 border border-gray-300 rounded-xl shadow focus:outline-none">
-          <option>🚻 Gender</option>
+        <select id="filterGender" class="w-full p-3 border border-gray-300 rounded-xl shadow focus:outline-none">
+          <option value="">🚻 Gender</option>
           <option>All</option>
           <option>Female Only</option>
         </select>
-        <select class="w-full p-3 border border-gray-300 rounded-xl shadow focus:outline-none">
-          <option>💸 Income Bracket</option>
+        <select id="filterIncome" class="w-full p-3 border border-gray-300 rounded-xl shadow focus:outline-none">
+          <option value="">💸 Income Bracket</option>
           <option>Below ₹1L</option>
           <option>₹1L - ₹5L</option>
           <option>₹5L - ₹10L</option>
           <option>Above ₹10L</option>
         </select>
-        <select class="w-full p-3 border border-gray-300 rounded-xl shadow focus:outline-none">
-          <option>📍 State</option>
+        <select id="filterState" class="w-full p-3 border border-gray-300 rounded-xl shadow focus:outline-none">
+          <option value="">📍 State</option>
           <option>Maharashtra</option>
           <option>Karnataka</option>
           <option>Delhi</option>
@@ -76,15 +76,8 @@
       </div>
 
       <!-- Scholarship Grid -->
-      <div class="md:w-3/4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div class="bg-white rounded-2xl shadow-lg p-6 transform hover:scale-105 transition duration-300 border-t-4 border-indigo-500">
-          <h3 class="text-xl font-bold text-indigo-700 mb-2">📚 Scholarship Name</h3>
-          <p class="text-sm text-gray-600 mb-1">💰 Amount: ₹50,000</p>
-          <p class="text-sm text-gray-600 mb-1">📅 Deadline: Aug 31, 2025</p>
-          <p class="text-sm text-gray-600 mb-4">✅ UG students under ₹5L income</p>
-          <button class="w-full bg-indigo-600 text-white py-2 rounded-xl hover:bg-indigo-700 transition">Apply Now</button>
-        </div>
-        <p class="text-gray-500 col-span-full text-center py-20 hidden">Loading scholarships...</p>
+      <div id="scholarshipGrid" class="md:w-3/4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <p class="text-gray-500 col-span-full text-center py-20">Loading scholarships...</p>
       </div>
     </div>
   </section>
