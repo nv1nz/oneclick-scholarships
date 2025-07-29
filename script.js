@@ -1,79 +1,78 @@
-let scholarships = [];
-
 document.addEventListener("DOMContentLoaded", () => {
-  const grid = document.querySelector(".md\\:w-3\\/4 .grid");
-  const searchInput = document.querySelector("input[type='text']");
-  const filters = document.querySelectorAll("select");
-  const allenInput = document.querySelector("#allenChat input");
-  const allenBtn = document.querySelector("#allenChat button");
+  const grid = document.getElementById("scholarshipGrid");
+  const searchInput = document.getElementById("searchInput");
 
-  // Load scholarships
+  // Filters
+  const academic = document.getElementById("filterAcademic");
+  const type = document.getElementById("filterType");
+  const gender = document.getElementById("filterGender");
+  const income = document.getElementById("filterIncome");
+  const state = document.getElementById("filterState");
+
+  let scholarships = [];
+
   fetch("scholarships.json")
     .then(res => res.json())
     .then(data => {
       scholarships = data;
-      displayScholarships(scholarships);
+      renderScholarships(scholarships);
     });
 
-  function displayScholarships(data) {
+  function renderScholarships(data) {
     grid.innerHTML = "";
+
     if (data.length === 0) {
-      grid.innerHTML = `<p class="text-gray-500 col-span-full text-center py-20">No scholarships found.</p>`;
+      grid.innerHTML = `<p class="text-gray-500 col-span-full text-center py-10">No scholarships found.</p>`;
       return;
     }
 
     data.forEach(s => {
-      const div = document.createElement("div");
-      div.className = "bg-white rounded-2xl shadow-lg p-6 transform hover:scale-105 transition duration-300 border-t-4 border-indigo-500 animate-fade-in";
-      div.innerHTML = `
-        <h3 class="text-xl font-bold text-indigo-700 mb-2">📚 ${s.name}</h3>
-        <p class="text-sm text-gray-600 mb-1">💰 Amount: ${s.amount}</p>
-        <p class="text-sm text-gray-600 mb-1">📅 Deadline: ${s.deadline}</p>
-        <p class="text-sm text-gray-600 mb-4">✅ ${s.eligibility}</p>
-        <a href="${s.link}" target="_blank"><button class="w-full bg-indigo-600 text-white py-2 rounded-xl hover:bg-indigo-700 transition">Apply Now</button></a>
+      const card = document.createElement("div");
+      card.className = "bg-white p-5 rounded-2xl shadow hover:shadow-lg transition duration-300 animate-fade-in";
+      card.innerHTML = `
+        <h3 class="text-lg font-semibold text-indigo-700 mb-2">${s.name}</h3>
+        <p class="text-sm text-gray-600 mb-1"><b>Type:</b> ${s.type}</p>
+        <p class="text-sm text-gray-600 mb-1"><b>Academic:</b> ${s.academic}</p>
+        <p class="text-sm text-gray-600 mb-1"><b>Gender:</b> ${s.gender}</p>
+        <p class="text-sm text-gray-600 mb-1"><b>Income:</b> ${s.income}</p>
+        <p class="text-sm text-gray-600 mb-3"><b>State:</b> ${s.state}</p>
+        <a href="${s.link}" target="_blank" class="inline-block mt-2 text-indigo-600 font-medium hover:underline">Apply Now →</a>
       `;
-      grid.appendChild(div);
+      grid.appendChild(card);
     });
   }
 
-  function filterScholarships() {
-    const query = searchInput.value.toLowerCase();
-    let filtered = scholarships.filter(s => {
+  // Filter logic
+  function applyFilters() {
+    const keyword = searchInput.value.toLowerCase();
+
+    const filtered = scholarships.filter(s => {
+      const matchSearch =
+        s.name.toLowerCase().includes(keyword) ||
+        s.type.toLowerCase().includes(keyword) ||
+        s.eligibility?.toLowerCase().includes(keyword);
+
+      const matchAcademic = !academic.value || s.academic === academic.value;
+      const matchType = !type.value || s.type === type.value;
+      const matchGender = !gender.value || s.gender === gender.value;
+      const matchIncome = !income.value || s.income === income.value;
+      const matchState = !state.value || s.state === state.value;
+
       return (
-        s.name.toLowerCase().includes(query) ||
-        s.eligibility.toLowerCase().includes(query) ||
-        s.type?.toLowerCase().includes(query)
+        matchSearch &&
+        matchAcademic &&
+        matchType &&
+        matchGender &&
+        matchIncome &&
+        matchState
       );
     });
 
-    filters.forEach(select => {
-      const val = select.value;
-      if (!val || val.includes("🎓") || val.includes("🏷️") || val.includes("📍") || val.includes("🚻") || val.includes("💸")) return;
-
-      filtered = filtered.filter(s =>
-        Object.values(s).some(field => field.toLowerCase().includes(val.toLowerCase()))
-      );
-    });
-
-    displayScholarships(filtered);
+    renderScholarships(filtered);
   }
 
-  searchInput.addEventListener("input", filterScholarships);
-  filters.forEach(select => select.addEventListener("change", filterScholarships));
-
-  // Allen AI basic reply
-  allenBtn.addEventListener("click", () => {
-    const q = allenInput.value.toLowerCase();
-    let response = "Sorry, I didn't understand that.";
-
-    if (q.includes("deadline")) {
-      response = "Most deadlines are between Aug and Dec 2025.";
-    } else if (q.includes("10") || q.includes("class 10")) {
-      response = "Here are some scholarships for Class 10 students. Please use the filter!";
-    } else if (q.includes("female")) {
-      response = "Use the gender filter to find female-specific scholarships!";
-    }
-
-    alert("ALLEN AI says:\n\n" + response);
-  });
+  // Add event listeners
+  [searchInput, academic, type, gender, income, state].forEach(el =>
+    el.addEventListener("input", applyFilters)
+  );
 });
